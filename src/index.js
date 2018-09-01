@@ -1,3 +1,5 @@
-import { obj, str, helloWorld } from './example';
+import fetchData from './startupgoa/fetchdata';
 
-export { obj, helloWorld };
+
+
+fetchData.getData();

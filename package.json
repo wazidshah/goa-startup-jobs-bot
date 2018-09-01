@@ -5,7 +5,8 @@
   "main": "./build/index.js",
   "scripts": {
     "babel-node": "babel-node --",
-    "build": "./node_modules/.bin/babel src -d build",
+    "start": "node ./build/index.js",
+    "build": "./node_modules/.bin/babel src -d build --watch",
     "dist": "./node_modules/.bin/babel src -d dist --presets=babili",
     "test": "./node_modules/.bin/mocha --compilers js:babel-core/register --reporter spec"
   },
@@ -21,6 +22,7 @@
   "author": "Nitesh Sawant",
   "license": "MIT",
   "dependencies": {
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
