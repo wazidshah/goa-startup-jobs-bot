@@ -16,11 +16,11 @@ bot.setGetStartedButton((payload, chat) => {
     User.findOne({ user_id: payload.sender.id })
         .then((result) => {
             console.log(result);
-            if (result.user_id !== payload.sender.id) {
+            if (result == null || result.user_id !== payload.sender.id) {
                 let new_record = new User({
                     user_id: payload.sender.id
                 });
-                new_record.save().then(() => console.log('Record save!!'))
+                new_record.save().then(() => console.log('Record saved!!'))
 
             }
         })
@@ -28,26 +28,42 @@ bot.setGetStartedButton((payload, chat) => {
 });
 
 bot.hear('latest jobs', (payload, chat) => {
-    //chat.say('Please wait till we fetch some latest jobs!!');
+    chat.say('Please wait till we fetch some latest jobs!!');
     Job.find({})
         .limit(5)
         .exec((err, jobs) => {
             if (err) {
                 chat.say('Was not able to get the latest jobs!')
             } else {
-                let msg = 'Top 5 Jobs are \n';
+                let msg = 'Top 5 Jobs are';
                 jobs.forEach((value) => {
-                    msg += `
-                    Title : ${value.job_title}
-                    Type:${value.job_type}
-                    Posted on:${value.posted_date.toDateString()}
-                    More Info : ${value.job_link}
-
-                    `
+                    msg += "\nTitle : " + value.job_title;
+                    msg += "\nType : " + value.job_type;
+                    msg += "\nPosted On : " + value.posted_date.toDateString();
+                    msg += "\nMore Info : " + value.value.job_link;
                 });
 
                 chat.say(msg);
+            }
+        })
+});
 
+
+bot.hear('subscribe', (payload, chat) => {
+    User.findOne({ user_id: payload.sender.id })
+        .exec((err, result) => {
+            if (err) {
+                console.log(err);
+                chat.say('Something went wrong!!')
+            } else if (result.user_id != payload.sender.id) {
+                let new_record = new User({
+                    user_id: payload.sender.id
+                });
+                new_record.save()
+                    .then(() => chat.say('You are subscribed now'))
+                    .catch(() => chat.say('Something went wrong'))
+            } else {
+                chat.say('you are already subscribed!!')
             }
         })
 });
@@ -56,6 +72,16 @@ bot.hear(['hello', 'hey', 'sup'], (payload, chat) => {
     chat.say(`Hey , How are you today?`);
 });
 
+bot.hear('help', (payload, chat) => {
+    chat.say('Here are the following commands for use.')
+    chat.say("'latest jobs': Give top 5 latest jobs")
+    chat.say("'subscribe': Automatically notify when a new job is posted")
+})
 
+bot.on('message', (payload, chat, data) => {
+    if (!data.captured) {
+        chat.say("I don't expect that!");
+    }
+});
 
 export default bot;

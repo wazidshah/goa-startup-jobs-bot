@@ -11,7 +11,7 @@ console.log(dbUrl);
 mongoose.connect(dbUrl, { useNewUrlParser: true })
     .then(() => {
         console.log('Database connected');
-        // addData();
+        addData();
     })
     .catch(err => console.log(err));
 

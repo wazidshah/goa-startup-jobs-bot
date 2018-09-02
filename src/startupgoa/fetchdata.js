@@ -31,11 +31,12 @@ const fetchData = {
                 uri: "http://startupgoa.org/jm-ajax/get_listings/",
                 headers: HEADERS,
                 form: FORMDATA
-            }, (err, httpResponse, body) => {
+            }, (err, httpResponse,body) => {
                 if(err){
                     reject(err);
                 }else{
-                    resolve(body.html)
+                    body = JSON.parse(body);
+                    resolve(body.html);
                 }
             });
         });

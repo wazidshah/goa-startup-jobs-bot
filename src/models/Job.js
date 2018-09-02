@@ -5,6 +5,7 @@ const JobListSchema = new Schema({
     job_id: {
         type: Number,
         required: true,
+        unique:true,
     },
     job_title: {
         type: String,
