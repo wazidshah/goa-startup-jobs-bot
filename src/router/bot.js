@@ -35,12 +35,13 @@ bot.hear('latest jobs', (payload, chat) => {
             if (err) {
                 chat.say('Was not able to get the latest jobs!')
             } else {
-                let msg = 'Top 5 Jobs are';
+                let msg = 'Top 5 Jobs are\n';
                 jobs.forEach((value) => {
                     msg += "\nTitle : " + value.job_title;
                     msg += "\nType : " + value.job_type;
                     msg += "\nPosted On : " + value.posted_date.toDateString();
-                    msg += "\nMore Info : " + value.value.job_link;
+                    msg += "\nMore Info : " + value.job_link;
+                    msg += "\n\n";
                 });
 
                 chat.say(msg);
