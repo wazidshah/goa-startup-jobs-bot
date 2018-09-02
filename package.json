@@ -10,8 +10,7 @@
     "dist": "./node_modules/.bin/babel src -d dist --presets=babili",
     "forward": "lt --port 3000 --subdomain startupgoajob",
     "test": "./node_modules/.bin/mocha --compilers js:babel-core/register --reporter spec",
-    "dev":"concurrently \"npm run build\" \"npm start\" \"npm run forward\""
-
+    "dev": "concurrently \"npm run build\" \"npm start\" \"npm run forward\""
   },
   "repository": {
     "type": "git",

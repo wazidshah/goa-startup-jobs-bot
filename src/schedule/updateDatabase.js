@@ -15,18 +15,16 @@ function addData(data) {
         JobList
             .find({})
             .select('job_id')
-            .limit(10)
             .exec((err, data) => {
                 if (err) {
                     reject(err)
                 }
                 let jobIds = data.map(a => a.job_id);
                 let filtered_insert_data = insert_data.filter((job) => {
-                    return !jobIds.includes(job.job_id);
+                    return !jobIds.includes(parseInt(job.job_id));
                 });
-                console.log(filtered_insert_data);
                 if (filtered_insert_data.length > 0) {
-                    JobList.insertMany(insert_data).then((err, docs) => {
+                    JobList.insertMany(filtered_insert_data).then((err, docs) => {
                         if (err) {
                             console.log(err);
                         }

@@ -1,11 +1,11 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const JobListSchema = new Schema({
     job_id: {
         type: Number,
         required: true,
-        unique:true,
+        unique:true
     },
     job_title: {
         type: String,
@@ -34,4 +34,4 @@ const JobListSchema = new Schema({
 });
 
 const JobList = mongoose.model('joblist', JobListSchema);
-export default JobList;
+module.exports = JobList;
