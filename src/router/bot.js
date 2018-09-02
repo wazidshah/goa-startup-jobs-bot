@@ -15,7 +15,6 @@ bot.setGetStartedButton((payload, chat) => {
     chat.say('Hello its Startup Goa job bot!!!');
     User.findOne({ user_id: payload.sender.id })
         .then((result) => {
-            console.log(result);
             if (result == null || result.user_id !== payload.sender.id) {
                 let new_record = new User({
                     user_id: payload.sender.id
@@ -24,7 +23,6 @@ bot.setGetStartedButton((payload, chat) => {
 
             }
         })
-    BotUserId = payload.sender.id
 });
 
 bot.hear('latest jobs', (payload, chat) => {

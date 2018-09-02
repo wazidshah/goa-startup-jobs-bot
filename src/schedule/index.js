@@ -1,14 +1,16 @@
 import schedule from 'node-schedule';
-import cheerio from 'cheerio';
 import fetchData from '../startupgoa/fetchdata';
 import parseData from './htmlParser';
 import addData from './updateDatabase';
-// const rule = '0 1 * * *';
-const rule = '*/5 * * * * ';
+
+// fetch data everyday at 1 AM
+const rule = '0 1 * * *'; 
+
+//fetch data every 5 minutes
+// const rule = '*/5 * * * * ';
 
 const j = schedule.scheduleJob(rule, function () {
     console.log('Scheduler started!!');
-    let html = '';
     fetchData.getData()
         .then((html) => {
             parseData(html)

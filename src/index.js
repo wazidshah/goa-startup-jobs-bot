@@ -1,9 +1,6 @@
-import express from 'express';
-import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 require('dotenv').config();
 import bot from './router/bot';
-import joblists from './models/Job';
 import scheduleTask from './schedule/index';
 
 
