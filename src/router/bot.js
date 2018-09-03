@@ -14,13 +14,18 @@ bot.setGreetingText("Hello, I'm here to notify you about latest jobs posted on s
 bot.setGetStartedButton((payload, chat) => {
     chat.say('Hello its Startup Goa job bot!!!');
     User.findOne({ user_id: payload.sender.id })
-        .then((result) => {
-            if (result == null || result.user_id !== payload.sender.id) {
+        .exec((err, result) => {
+            if (err) {
+                console.log(err);
+            } else if (result.user_id != payload.sender.id) {
                 let new_record = new User({
                     user_id: payload.sender.id
                 });
-                new_record.save().then(() => console.log('Record saved!!'))
-
+                new_record.save()
+                    .then(() => chat.say('You are subscribed now'))
+                    .catch(() => console.log('something went wrong'))
+            } else {
+                chat.say('you are already subscribed!!')
             }
         })
 });
@@ -80,6 +85,8 @@ bot.hear('help', (payload, chat) => {
 bot.on('message', (payload, chat, data) => {
     if (!data.captured) {
         chat.say("I don't expect that!");
+        chat.say("Please type 'help' to know command I understand!");
+
     }
 });
 

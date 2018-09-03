@@ -2,6 +2,7 @@ import schedule from 'node-schedule';
 import fetchData from '../startupgoa/fetchdata';
 import parseData from './htmlParser';
 import addData from './updateDatabase';
+import notify from './notify';
 
 // fetch data everyday at 1 AM
 const rule = '0 1 * * *'; 
@@ -16,7 +17,7 @@ const j = schedule.scheduleJob(rule, function () {
             parseData(html)
                 .then((josnData) => {
                     addData(josnData)
-                        .then((msg) => console.log(msg))
+                        .then((msg) => notify())
                         .catch(() => console.log('failer'))
                 })
         })

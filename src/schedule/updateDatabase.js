@@ -8,7 +8,7 @@ function addData(data) {
         let insert_data = data.map((elem) => {
             temp = elem.posted_date.split(" ");
             elem.posted_date = moment().subtract(parseInt(temp[0]), temp[1]).toDate();
-            elem.is_notified = true;
+            elem.is_notified = false;
             return elem;
         });
 
