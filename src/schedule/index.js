@@ -3,25 +3,25 @@ import fetchData from '../startupgoa/fetchdata';
 import parseData from './htmlParser';
 import addData from './updateDatabase';
 import notify from './notify';
-
+import log from '../logger';
 // fetch data everyday at 1 AM
-const rule = '0 1 * * *'; 
+const rule = '0 1 * * *';
 
 //fetch data every 5 minutes
 // const rule = '*/5 * * * * ';
 
 const j = schedule.scheduleJob(rule, function () {
-    console.log('Scheduler started!!');
+    log.info('Scheduler started');
     fetchData.getData()
         .then((html) => {
             parseData(html)
                 .then((josnData) => {
                     addData(josnData)
-                        .then((msg) => notify())
-                        .catch(() => console.log('failer'))
+                        .then(() => notify())
+                        .catch((err) => log.error(err.message))
                 })
         })
-        .catch((err) => console.log(err))
+        .catch((err) => log.error(err.message))
 });
 
 export default j;

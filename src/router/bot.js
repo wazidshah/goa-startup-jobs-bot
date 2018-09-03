@@ -2,6 +2,7 @@ require('dotenv').config();
 import BootBot from 'bootbot';
 import User from '../models/User';
 import Job from '../models/Job';
+import log from '../logger';
 
 const bot = new BootBot({
     accessToken: process.env.ACCESS_TOKEN,
@@ -16,14 +17,14 @@ bot.setGetStartedButton((payload, chat) => {
     User.findOne({ user_id: payload.sender.id })
         .exec((err, result) => {
             if (err) {
-                console.log(err);
+                log.error(err.message)
             } else if (result.user_id != payload.sender.id) {
                 let new_record = new User({
                     user_id: payload.sender.id
                 });
                 new_record.save()
                     .then(() => chat.say('You are subscribed now'))
-                    .catch(() => console.log('something went wrong'))
+                    .catch((err) => log.error(err.message))
             } else {
                 chat.say('you are already subscribed!!')
             }
@@ -36,6 +37,7 @@ bot.hear('latest jobs', (payload, chat) => {
         .limit(5)
         .exec((err, jobs) => {
             if (err) {
+                log.error(err.message);
                 chat.say('Was not able to get the latest jobs!')
             } else {
                 let msg = 'Top 5 Jobs are\n';
@@ -57,7 +59,7 @@ bot.hear('subscribe', (payload, chat) => {
     User.findOne({ user_id: payload.sender.id })
         .exec((err, result) => {
             if (err) {
-                console.log(err);
+                log.error(err.message);
                 chat.say('Something went wrong!!')
             } else if (result.user_id != payload.sender.id) {
                 let new_record = new User({

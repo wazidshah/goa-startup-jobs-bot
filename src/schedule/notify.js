@@ -2,6 +2,7 @@ require('dotenv').config();
 import BootBot from 'bootbot';
 import User from '../models/User';
 import Job from '../models/Job';
+import log from '../logger';
 
 
 function notify() {
@@ -16,13 +17,17 @@ function notify() {
         .find({})
         .exec((err, users) => {
             if (err) {
-                console.log(err);
+                log.error(err.message);
             }
             // get the latest jobs which are not notified
 
             Job
                 .find({ is_notified: false })
                 .exec((err, jobs) => {
+                    if (err) {
+                        log.error(err.message);
+                    }
+
                     if (!jobs.length == 0) {
                         let msg = 'Latest Jobs are \n';
                         jobs.forEach((value) => {
@@ -41,13 +46,10 @@ function notify() {
                         Job.update({ is_notified: false },
                             { is_notified: true },
                             { multi: true }, (err, res) => {
-                                if(err){
-                                    console.log(err);
-                                }else{
-                                    console.log(res);
-                                }
+                                if (err) {
+                                    log.error(err.message);
+                                } 
                             })
-
                     }
                 })
         })
