@@ -34,6 +34,7 @@ bot.setGetStartedButton((payload, chat) => {
 bot.hear('latest jobs', (payload, chat) => {
     chat.say('Please wait till we fetch some latest jobs!!');
     Job.find({})
+        .sort({ posted_date: 'desc' })
         .limit(5)
         .exec((err, jobs) => {
             if (err) {
