@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 import BootBot from 'bootbot';
 import User from '../models/User';
 import Job from '../models/Job';

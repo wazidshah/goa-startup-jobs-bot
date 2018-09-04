@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-require('dotenv').config();
+// require('dotenv').config();
 import bot from './router/bot';
 import scheduleTask from './schedule/index';
 import log from './logger';
