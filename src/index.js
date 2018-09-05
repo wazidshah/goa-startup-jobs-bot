@@ -13,5 +13,5 @@ mongoose.connect(dbUrl, { useNewUrlParser: true })
     .catch(err => log.error(err.message));
 
 
-bot.start();
+bot.start(process.env.PORT || 3000);
 
