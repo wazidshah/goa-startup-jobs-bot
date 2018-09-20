@@ -6,7 +6,7 @@ and displays them in facebook messenger.
 ##Demo
 
 ## Disclaimer
-<hr>
+
 This bot is creatd for educational purpose only. It does not intent to violate any copyrights.
 
    
